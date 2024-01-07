@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./assets/css/common.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrap">
+        <!-- 시간 영역 -->
+        <div class="timeArea area">
+            <div class="time">
+                00:00
+            </div>
+        </div>
+        
+        <!-- 랩 기록 영역 -->
+        <div class="lapArea area">
+            <p>랩 타임</p>
+            <ul class="lapList">
+            </ul>
+        </div>
+    
+        <!-- 버튼 영역 -->
+        <div id="btnWrap" class="btnArea area">
+            <!-- 시작버튼 -->
+            <div class="btnWrap isStop">
+                <button type="button" class="btn startBtn">시작</button>
+            </div>
+            <!-- 일시정지, 리셋, 랩 버튼 -->
+            <div class="btnWrap isStart off">
+                <button type="button" class="btn labBtn">랩</button>
+                <button type="button" class="btn pauseBtn">일시정지</button>
+                <button type="button" class="btn isStartStopBtn">정지</button>
+            </div>
+            <!-- 다시시작, 리셋 -->
+            <div class="btnWrap isPuase off">
+                <button type="button" class="btn restartBtn">다시시작</button>
+                <button type="button" class="btn isPuaseStopBtn">정지</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./assets/js/index.js"></script>
+</body>
+</html>
