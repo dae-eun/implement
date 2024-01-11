@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="App" style="font-size: 70px;"></div>
+    <script>
+        // 새로운 ul 엘리먼트를 생성하고 'list' id를 부여한 후, App 엘리먼트에 추가합니다.
+        const ul = document.createElement('ul');
+        ul.id = 'list';
+        document.getElementById('App').append(ul);
+
+        // API 요청을 위한 기본 URL을 정의하고, 초기 페이지 및 제한 수를 설정한 params 객체를 생성합니다.
+        const baseUrl = new URL('https://dummyapi.io/data/v1/user');
+        const params = {
+            page: '1',
+            limit: '10'
+        };
+
+        // 페이지 번호를 추적하기 위한 변수를 초기화합니다.
+        let currentPage = 1;
+
+        // API 호출 함수입니다.
+        const callApi = async () => {
+            // 현재 페이지를 포함한 새로운 쿼리 스트링을 생성하여 baseUrl에 적용합니다.
+            const queryString = new URLSearchParams(params).toString();
+            baseUrl.search = queryString;
+
+            // API에 대한 GET 요청을 수행합니다.
+            const response = await fetch(baseUrl, {
+                method: "GET",
+                headers: {
+                    'app-id': "659fe0757ba7ceabfadc30f7"
+                }
+            });
+
+            // 응답 데이터를 JSON 형식으로 파싱합니다.
+            const jsonData = await response.json();
+            console.log(jsonData);
+
+            // API에서 받아온 데이터를 가지고 리스트 아이템을 동적으로 생성합니다.
+            jsonData.data.forEach(element => {
+                const li = document.createElement('li');
+                li.append('id : ' + element.id);
+                li.append('name : ' + element.firstName + ' ' + element.lastName);
+                document.getElementById('list').append(li);
+            });
+
+            // 페이지 번호를 증가시켜 다음 페이지를 요청할 수 있도록 합니다.
+            currentPage++;
+
+            // params 객체의 page 속성을 업데이트합니다.
+            params.page = currentPage.toString();
+            console.log(params);
+        }
+
+        // 페이지 로딩 시 초기 API 호출
+        callApi();
+
+        // 디바운스 함수를 정의합니다.
+        function debounce(func, delay) {
+            let timeout;
+            console.log(1)
+            return function() {
+                const context = this;
+                console.log("context" + context)
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, delay);
+            };
+        }
+
+        // 디바운스된 API 호출 함수를 생성합니다.
+        const debouncedCallApi = debounce(callApi, 1000);
+
+        // 스크롤 이벤트 리스너를 등록하여 페이지가 맨 아래에 도달하면 디바운스된 API 호출 함수를 실행합니다.
+        window.addEventListener('scroll', function() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                debouncedCallApi();
+            }
+        });
+    </script>
+</body>
+</html>
