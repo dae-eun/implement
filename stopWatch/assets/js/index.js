@@ -46,6 +46,7 @@ function handleClick(event) {
       elements.lapList.removeChild(elements.lapList.firstChild);
     }
     elements.timeDisplay.innerHTML = '00:00';
+    timer.labArray.length = 0;
     elements.startArea.classList.remove('off');
     elements.stopArea.classList.add('off');
     timer.startTime = performance.now();
@@ -60,7 +61,6 @@ function handleClick(event) {
     timer.timerId = null;
     timer.labTime = 0;
     timer.beforeLab = 0;
-    timer.labArray.length = 0;
     elements.stopArea.classList.remove('off');
     elements.pauseArea.classList.add('off');
     elements.startArea.classList.add('off');
